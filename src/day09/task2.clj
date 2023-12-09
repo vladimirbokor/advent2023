@@ -16,7 +16,9 @@
   )
 
 (defn calculate-value [seq]
-  (reduce (fn [acc x] (- x acc)) (last seq) (reverse (butlast seq))))
+  (let [reversed (reverse seq)]
+    (reduce (fn [acc x] (- x acc)) (first reversed) (rest reversed))))
+  
 
 (defn parse-seq [initial-seq]
   (->>
