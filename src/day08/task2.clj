@@ -25,7 +25,7 @@
   (loop [curr-maps next-maps
          curr-count count]
     (let [next-move (instr-gen)
-          current-map (map #(get-next-map next-move maps %) curr-maps)]
+          current-map (mapv #(get-next-map next-move maps %) curr-maps)]
       (if (every? #(str/ends-with? % "Z") current-map)
         curr-count
         (recur current-map (inc curr-count))))))
@@ -34,11 +34,10 @@
 (with-open [rdr (clojure.java.io/reader "assets/day08/real_data.txt")]
   (let [lines (line-seq rdr)
         instructions (first lines)
-        maps-lines (nthrest lines 2)
-        maps (into {} (map parse-pair maps-lines))
+        maps-lines (nthrest lines 2) maps (into {} (mapv parse-pair maps-lines))
         instr-gen (create-generator instructions)
         initial-map (filterv #(str/ends-with? % "A") (keys maps))]
-    ;; Not working ;(
+    ;; Shouldn't be straight solution  ;(
     (go-through-map instr-gen maps initial-map 1)
     ) 
 )
