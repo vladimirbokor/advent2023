@@ -23,5 +23,3 @@
    (make-steps rdr)
    (map calc-hash)
    (reduce +)))
-
-(calc-hash "qp")
